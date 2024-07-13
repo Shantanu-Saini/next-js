@@ -4,7 +4,7 @@ export default function Home() {
 
       <div className="">
         <h1>Hello World</h1>
-        <p>The first Next.js app</p>
+        <p>This is Home page</p>
       </div>
     </main>
   );
