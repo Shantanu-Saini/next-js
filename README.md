@@ -310,3 +310,165 @@ Start the development server and Open your browser and navigate to the following
 - Product Details Page: http://localhost:3000/products/[productId] (e.g., http://localhost:3000/products/1)
 - Reviews Page: http://localhost:3000/products/[productId]/reviews (e.g., http://localhost:3000/products/1/reviews)
 - Review Details Page: http://localhost:3000/products/[productId]/reviews/[reviewDetail] (e.g., http://localhost:3000/products/1/reviews/john)
+
+## 5=> Catch-All Segments
+Next.js allows you to create catch-all routes that can match multiple segments. This is useful for dynamic URLs where the number of segments can vary.
+
+To implement catch-all segments in Next.js, follow these steps:
+
+- Inside the `src/app` folder, create a `books` folder. Inside the `books` folder, create a folder named `[[...slug]]`.
+
+Your folder structure should look like this:
+
+```
+├── src/
+│ ├── app/
+│ │ ├── about/
+│ │ │ └── page.jsx
+│ │ ├── profile/
+│ │ │ └── page.jsx
+│ │ ├── blog/
+│ │ │ ├── first/
+│ │ │ │ └── page.jsx
+│ │ │ ├── second/
+│ │ │ │ └── page.jsx
+│ │ │ └── page.jsx
+│ │ ├── products/
+│ │ │ ├── [productId]/
+│ │ │ │ ├── reviews/
+│ │ │ │ │ ├── [reviewDetail]/
+│ │ │ │ │ │ └── page.jsx
+│ │ │ │ │ └── page.jsx
+│ │ │ └── page.jsx
+│ │ ├── books/
+│ │ │ ├── [[...slug]]/
+│ │ │ │ └── page.jsx
+│ └── page.jsx
+```
+
+
+### Books Page
+Create a folder named `[[...slug]]` inside the `src/app/books` directory. Inside the `[[...slug]]` folder, create a file named `page.jsx`.
+
+```jsx
+// src/app/books/[[...slug]]/page.jsx
+export default function Books({ params }) {
+    if (params.slug?.length === 2) {
+        return (
+            <h1>This book's name is {params.slug[0]} and the writer of this book is {params.slug[1]}.</h1>
+        );
+    } else if (params.slug?.length === 1) {
+        return (
+            <h1>This book's name is {params.slug[0]}.</h1>
+        );
+    }
+    return <h1>This is the books display page</h1>;
+}
+```
+
+### Running the Application
+Start the development server and Open your browser and navigate to the following URLs to see the different pages:
+
+- Books Page: http://localhost:3000/books
+    #### Shows: `This is the books display page`
+- Book Name Page: http://localhost:3000/books/[bookName] (e.g., http://localhost:3000/books/letUsC)
+    #### Shows: `This book's name is letUsC.`
+- Book Name and Writer Page: http://localhost:3000/books/[bookName]/[writerName] (e.g., http://localhost:3000/books/letUsC/yashwantkanetkar)
+    #### Shows: `This book's name is letUsC and the writer of this book is yashwantkanetkar.`
+
+### Special Note
+If the URL is http://localhost:3000/books, it will show "Page Not Found" if you use `[...slug]`. To handle this special case and display a default message, change the folder name to `[[...slug]]`.
+
+By using `[[...slug]]`, Next.js will match the root route `/books` and display `"This is the books display page"`.
+
+## 6=> Handling Page Not Found
+
+Next.js allows you to create custom "Page Not Found" pages. This is useful when you want to display a custom message when a user navigates to a non-existent page.
+
+### Global Page Not Found
+
+To create a global "Page Not Found" page, follow these steps:
+
+- Create a file named `not-found.jsx` in the `src` directory.
+
+Your folder structure should look like this:
+
+```
+├── src/
+│ ├── app/
+│ │ ├── about/
+│ │ │ └── page.jsx
+│ │ ├── profile/
+│ │ │ └── page.jsx
+│ │ ├── blog/
+│ │ │ ├── first/
+│ │ │ │ └── page.jsx
+│ │ │ ├── second/
+│ │ │ │ └── page.jsx
+│ │ │ └── page.jsx
+│ │ ├── products/
+│ │ │ ├── [productId]/
+│ │ │ │ ├── reviews/
+│ │ │ │ │ ├── [reviewDetail]/
+│ │ │ │ │ │ └── page.jsx
+│ │ │ │ │ └── not-found.jsx
+│ │ │ │ │ └── page.jsx
+│ │ │ └── page.jsx
+│ │ ├── books/
+│ │ │ ├── [[...slug]]/
+│ │ │ │ └── page.jsx
+│ │ └── not-found.jsx
+│ └── page.jsx
+```
+
+
+### Global NotFound Component
+
+Create a file named `not-found.jsx` in the `src` directory.
+
+```jsx
+// src/not-found.jsx
+export default function NotFound() {
+  return (
+    <h1>Error: Page not found</h1>
+  );
+}
+```
+
+### Specific Page Not Found for Reviews
+To create a specific "Page Not Found" message for a certain route, follow these steps:
+
+
+#### Review NotFound Component
+1. Create a file named not-found.jsx inside the `src/app/products/[productId]/reviews/[reviewDetail]` directory.
+```jsx
+// src/app/products/[productId]/reviews/[reviewDetail]/not-found.jsx
+export default function NotFound() {
+    return (
+        <div><h1>This review not found.</h1></div>
+    );
+}
+```
+2. Updating the ReviewDetails Component: 
+Update the page.jsx file inside the `src/app/products/[productId]/reviews/[reviewDetail]` directory to handle "not found" cases.
+```jsx
+// src/app/products/[productId]/reviews/[reviewDetail]/page.jsx
+import { notFound } from "next/navigation";
+
+export default function ReviewDetails({ params }) {
+    if (parseInt(params.reviewDetail) > 400) {
+        notFound();
+        return null; // You should return null after calling notFound()
+    }
+    return (
+        <>
+            <h1>This is the review of product {params.productId} and review no. is {params.reviewDetail}</h1>
+        </>
+    );
+}
+```
+
+### Running the Application
+Start the development server and Open your browser and navigate to the following URLs to see the different pages:
+- For any non-existent page, the global "Page Not Found" message will be shown.
+- For specific review pages where reviewDetail is greater than 400, the custom "This review not found." message will be shown.
