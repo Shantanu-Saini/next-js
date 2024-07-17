@@ -472,3 +472,86 @@ export default function ReviewDetails({ params }) {
 Start the development server and Open your browser and navigate to the following URLs to see the different pages:
 - For any non-existent page, the global "Page Not Found" message will be shown.
 - For specific review pages where reviewDetail is greater than 400, the custom "This review not found." message will be shown.
+
+## 7=> Grouping Routes
+
+Next.js allows you to group routes without including the group name in the URL. This is useful for organizing your directory structure while keeping the URLs clean and user-friendly.
+
+### Grouping Routes
+
+To group routes, follow these steps:
+
+- Create a folder named `auth`.
+- Inside the `auth` folder, create two folders: `login` and `register`.
+- Each folder should contain a `page.jsx` file.
+
+Your folder structure should look like this:
+
+```
+├── src/
+│ ├── app/
+│ │ ├── (auth)/
+│ │ │ ├── login/
+│ │ │ │ └── page.jsx
+│ │ │ ├── register/
+│ │ │ │ └── page.jsx
+│ │ ├── about/
+│ │ │ └── page.jsx
+│ │ ├── profile/
+│ │ │ └── page.jsx
+│ │ ├── blog/
+│ │ │ ├── first/
+│ │ │ │ └── page.jsx
+│ │ │ ├── second/
+│ │ │ │ └── page.jsx
+│ │ │ └── page.jsx
+│ │ ├── products/
+│ │ │ ├── [productId]/
+│ │ │ │ ├── reviews/
+│ │ │ │ │ ├── [reviewDetail]/
+│ │ │ │ │ │ └── page.jsx
+│ │ │ │ │ └── not-found.jsx
+│ │ │ │ │ └── page.jsx
+│ │ │ └── page.jsx
+│ │ ├── books/
+│ │ │ ├── [[...slug]]/
+│ │ │ │ └── page.jsx
+│ │ └── not-found.jsx
+│ └── page.jsx
+```
+
+### Login Page
+
+Create a file named `page.jsx` inside the `src/app/(auth)/login` directory.
+
+```jsx
+// src/app/(auth)/login/page.jsx
+export default function Login() {
+  return (
+    <h1>Login</h1>
+  );
+}
+```
+
+### Register Page
+Create a file named `page.jsx` inside the `src/app/(auth)/register` directory.
+
+```jsx
+// src/app/(auth)/register/page.jsx
+export default function Register() {
+  return (
+    <h1>Register</h1>
+  );
+}
+```
+
+### Running the Application
+Start the development server and Open your browser and navigate to the following URLs to see the different pages:
+
+- Login Page: http://localhost:3000/login
+Shows: Login
+- Register Page: http://localhost:3000/register
+Shows: Register
+
+By using parentheses around the folder name, Next.js creates a group of routes without including the group name in the URL. This helps keep your URLs clean and your directory structure organized.
+
