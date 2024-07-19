@@ -680,3 +680,71 @@ Start the development server. Open your browser and navigate to
 - You will see the ProductDetailsLayout applied, displaying the additional information below the main content.
 
 By following these steps, you have successfully created a nested layout in Next.js, ensuring that specific components like product details are displayed on relevant pages within your application.
+
+# 3 => Links in Next.js
+
+Next.js provides a built-in `<Link>` component that allows for client-side navigation between pages. This component optimizes the navigation process and improves performance by preloading linked pages.
+
+### Step 1: Import the Link Component
+
+To use the `<Link>` component, you need to import it from `next/link`.
+
+### Step 2: Using Link in a Header Component
+
+Here's an example of how to use the `<Link>` component in a `Header` component to navigate to different pages:
+
+```jsx
+// components/Header.jsx
+import Link from 'next/link';
+import React from 'react';
+
+function Header() {
+  return (
+    <div>
+      <header className='grid place-content-center bg-orange-300 py-6'>
+        <h1 className='text-4xl font-bold'>My Header</h1>
+        <div className='flex items-center justify-center'>
+          <Link href='/' className="text-2xl mx-4">Home</Link>
+          <Link href='/about' className="text-2xl mx-4">About</Link>
+          <Link href='/profile' className="text-2xl mx-4">Profile</Link>
+          <Link href='/products' className="text-2xl mx-4">Products</Link>
+        </div>
+      </header>
+    </div>
+  );
+}
+
+export default Header;
+```
+
+### Using Link in a Page Component
+You can also use the <Link> component within any page to navigate to other pages. Here's an example in the Home page:
+
+```jsx
+// src/app/page.jsx
+import Link from "next/link";
+
+export default function Home() {
+  return (
+    <main>
+      <div className="flex items-center justify-center my-10">
+        <h1>Hello World</h1>
+        <p>This is Home page</p>
+        <Link href="/about" className="text-2xl mx-4">About</Link>
+        <Link href="/profile" className="text-2xl mx-4">Profile</Link>
+        <Link href="/products" className="text-2xl mx-4">Products</Link>
+      </div>
+    </main>
+  );
+}
+```
+
+### Step 3: Running the Application
+Start the development server and navigate to the different URLs to see the links in action. For example:
+
+- Navigate to http://localhost:3000 to see the Home page with links to About, Profile, and Products pages.
+- Navigate to http://localhost:3000/about to see the About page.
+- Navigate to http://localhost:3000/profile to see the Profile page.
+- Navigate to http://localhost:3000/products to see the Products page.
+
+By following these steps, you have successfully integrated client-side navigation in your Next.js application using the <Link> component.
