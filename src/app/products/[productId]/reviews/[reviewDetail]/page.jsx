@@ -6,7 +6,7 @@ export default function ReviewDetails({ params }) {
     }
     return (
         <>
-            <h1>this is the review of product {params.productId} and review no. is {params.reviewDetail}</h1>
+            <h1>this is the review of product <em>{params.productId}</em> and review no. is <b>{params.reviewDetail}</b></h1>
         </>
     )
 }

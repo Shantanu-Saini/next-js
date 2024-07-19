@@ -682,7 +682,7 @@ Start the development server. Open your browser and navigate to
 By following these steps, you have successfully created a nested layout in Next.js, ensuring that specific components like product details are displayed on relevant pages within your application.
 
 # 3 => Links in Next.js
-
+## 1=> Simple Links
 Next.js provides a built-in `<Link>` component that allows for client-side navigation between pages. This component optimizes the navigation process and improves performance by preloading linked pages.
 
 ### Step 1: Import the Link Component
@@ -748,3 +748,107 @@ Start the development server and navigate to the different URLs to see the links
 - Navigate to http://localhost:3000/products to see the Products page.
 
 By following these steps, you have successfully integrated client-side navigation in your Next.js application using the <Link> component.
+
+## 2=> Dynamic Links in Next.js
+
+Next.js makes it simple to create dynamic links that lead to various routes within your application. This allows for a highly navigable and user-friendly interface. Let's walk through how to implement dynamic links in a Next.js application.
+
+### Step 1: Creating Dynamic Links in the Products Page
+
+First, we need to set up dynamic links on the Products page to navigate to specific product details.
+
+**`Products` Component**
+
+```jsx
+// app/products/page.jsx
+import Link from "next/link";
+
+export default function Products() {
+    return (
+        <>
+            <Link href="/" className="text-2xl mx-4">Home</Link>
+            <h1 className="text-3xl">This is Products page</h1>
+            <Link href="/products/laptop" className="text-2xl mx-4">Laptop</Link>
+            <Link href="/products/bag" className="text-2xl mx-4">Bag</Link>
+            <Link href="/products/shirt" className="text-2xl mx-4">Shirt</Link>
+        </>
+    );
+}
+```
+
+### Step 2: Creating the Product Details Page
+Next, we create a dynamic link in the Product Details page to navigate to the reviews for a specific product.
+
+`ProductDetails` Component
+```jsx
+// app/products/[productId]/page.jsx
+import Link from "next/link";
+
+export default function ProductDetails({ params }) {
+    return (
+        <>
+            <h1 className="text-3xl">
+                This is product detail page of product <b>{params.productId}</b>
+            </h1>
+            <h1 className="my-4 text-xl">
+                <Link href={`/products/${params.productId}/reviews`}>
+                    Reviews for {params.productId}
+                </Link>
+            </h1>
+        </>
+    );
+}
+```
+
+### Step 3: Creating the Reviews Page
+Now, let's create dynamic links in the Reviews page to navigate to specific review details.
+
+`Reviews` Component
+
+```jsx
+// app/products/[productId]/reviews/page.jsx
+import Link from "next/link";
+
+export default function Reviews({ params }) {
+    return (
+        <>
+            <h1 className="text-3xl">Reviews Of Products</h1>
+            <Link href={`/products/${params.productId}/reviews/Rohan`} className="text-2xl mx-4">Rohan</Link>
+            <Link href={`/products/${params.productId}/reviews/Amit`} className="text-2xl mx-4">Amit</Link>
+            <Link href={`/products/${params.productId}/reviews/Shyam`} className="text-2xl mx-4">Shyam</Link>
+        </>
+    );
+}
+```
+
+### Step 4: Creating the Review Details Page
+Lastly, create a component to handle the detailed view of a review, with a custom error message for non-existing reviews.
+
+`ReviewDetails` Component
+```jsx
+// app/products/[productId]/reviews/[reviewDetail]/page.jsx
+import { notFound } from "next/navigation";
+
+export default function ReviewDetails({ params }) {
+    if (parseInt(params.reviewDetail) > 400) {
+        notFound();
+    }
+    return (
+        <>
+            <h1>This is the review of product <em>{params.productId}</em> and review no. is <b>{params.reviewDetail}</b></h1>
+        </>
+    );
+}
+```
+
+### Running the Application
+To test your application, start the development server and navigate to the following URLs:
+
+- Products Page: http://localhost:3000/products
+- Product Details Page: http://localhost:3000/products/laptop
+- Reviews Page: http://localhost:3000/products/laptop/reviews
+- Review Details Page: http://localhost:3000/products/laptop/reviews/Rohan
+
+You should see the dynamic links in action, navigating to the respective pages.
+
+By following these steps, you have successfully created dynamic links in Next.js, allowing for seamless navigation across various pages within your application.
