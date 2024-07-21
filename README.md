@@ -852,3 +852,35 @@ To test your application, start the development server and navigate to the follo
 You should see the dynamic links in action, navigating to the respective pages.
 
 By following these steps, you have successfully created dynamic links in Next.js, allowing for seamless navigation across various pages within your application.
+
+# 4=> Loading UI in Next.js
+
+Next.js allows you to show a loading UI while your pages are being loaded. This can improve the user experience by providing visual feedback that the application is processing their request. Below are the steps to implement a loading UI in a Next.js application.
+
+## Step 1: Create `loading.jsx` Component
+
+Create a `loading.jsx` file in the `app`, `about`, `profile`, and `products` directories.
+
+### Example `loading.jsx`:
+
+```jsx
+// app/loading.jsx
+export default function Loading() {
+  return (
+    <>
+      <div className="bg-violet-800 h-screen w-screen flex items-center justify-center">
+        <h1 className="text-white text-3xl">Loading....</h1>
+      </div>
+    </>
+  );
+}
+```
+
+## Step 2: Test Your Loading UI
+Now, when you navigate to the app, about, profile, or products pages, the loading screen will appear while the content is being loaded.
+
+Example URLs:
+- http://localhost:3000/ - Shows the loading screen from app/loading.jsx
+- http://localhost:3000/about - Shows the loading screen from about/loading.jsx
+- http://localhost:3000/profile - Shows the loading screen from profile/loading.jsx
+- http://localhost:3000/products - Shows the loading screen from products/loading.jsx
