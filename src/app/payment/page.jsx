@@ -10,6 +10,11 @@ export default function Payment() {
         // router.replace('/products')
         // router.back();   // move back to the last page
     }
+
+    const handleCancle = () => {
+        throw new Error("Error: Payment Failed");
+    }
+
     return (
         <>
             <div className="flex flex-col justify-center items-center mx-4 py-4 space-y-4">
@@ -19,6 +24,12 @@ export default function Payment() {
                     onClick={handleClick}
                 >
                     Pay Now
+                </button>
+                <button
+                    className="bg-violet-800 text-white p-4 rounded-lg shadow-lg hover:bg-violet-700"
+                    onClick={handleCancle}
+                >
+                    Cancel Payment
                 </button>
             </div>
         </>
