@@ -5,7 +5,7 @@ export default function Books({ params }) {
         )
     } else if (params.slug?.length === 1) {
         return (
-            <h1>This book's name is {params.slug[0]}.</h1>
+            <h1>This book name is {params.slug[0]}.</h1>
         )
     }
     return <h1>This is books display page</h1>
