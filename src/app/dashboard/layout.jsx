@@ -2,9 +2,14 @@ export default function DashboardLayout({
     children,
     user,
     business,
-    notification
+    notification,
+    login
 }) {
-    return (
+
+    // const isLoggedIn = false;
+    const isLoggedIn = true;
+
+    return isLoggedIn ? (
         <div className="min-h-screen bg-gray-100 p-6">
             <div className="bg-white shadow rounded-lg p-6 mb-6">
                 {children}
@@ -23,5 +28,7 @@ export default function DashboardLayout({
                 </div>
             </div>
         </div>
+    ) : (
+        login
     )
 }
