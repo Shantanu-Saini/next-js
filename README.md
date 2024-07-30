@@ -884,3 +884,120 @@ Example URLs:
 - http://localhost:3000/about - Shows the loading screen from about/loading.jsx
 - http://localhost:3000/profile - Shows the loading screen from profile/loading.jsx
 - http://localhost:3000/products - Shows the loading screen from products/loading.jsx
+
+# 5=> Parallel Routes in Next.js
+
+Parallel routes allow you to render different parts of your application in parallel, enabling you to organize and display multiple components side by side. This can be particularly useful for dashboards or any layout that requires displaying various sections simultaneously.
+
+## Creating a Parallel Routes Layout
+
+Follow these steps to implement parallel routes in Next.js:
+
+### Step 1: Create the Main Dashboard Layout
+
+Inside the `app` folder, create a `dashboard` folder with `page.jsx` and `layout.jsx` files.
+
+#### `page.jsx`
+
+This file represents the main content of the dashboard.
+
+```jsx
+// app/dashboard/page.jsx
+export default function Dashboard() {
+  return (
+    <div>User Dashboard</div>
+  );
+}
+```
+
+#### layout.jsx
+This file defines the layout for the dashboard, organizing the children components along with user information, business information, and notifications.
+```jsx
+// app/dashboard/layout.jsx
+export default function DashboardLayout({
+  children,
+  user,
+  business,
+  notification
+}) {
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="bg-white shadow rounded-lg p-6 mb-6">
+        {children}
+      </div>
+      <div className="flex space-x-6">
+        <div className="flex-1 flex flex-col space-y-6">
+          <div className="bg-white shadow rounded-lg p-6">
+            {user}
+          </div>
+          <div className="bg-white shadow rounded-lg p-6">
+            {business}
+          </div>
+        </div>
+        <div className="flex-1 bg-white shadow rounded-lg p-6">
+          {notification}
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+### Step 2: Create Subfolders for Parallel Routes
+Inside the dashboard folder, create three subfolders: @user, @business, and @notification. Each folder will contain a page.jsx file representing a parallel route.
+
+#### @user/page.jsx
+```jsx
+// app/dashboard/@user/page.jsx
+import Card from "@/components/Card";
+
+export default function UserInfo() {
+  return (
+    <Card>User Information</Card>
+  );
+}
+```
+
+#### @bussiness/page.jsx
+```jsx
+// app/dashboard/@business/page.jsx
+import Card from "@/components/Card";
+
+export default function BusinessInfo() {
+  return (
+    <Card>Business Information</Card>
+  );
+}
+```
+
+#### @notification/page.jsx
+```jsx
+// app/dashboard/@notification/page.jsx
+import Card from "@/components/Card";
+
+export default function Notification() {
+  return (
+    <Card>Notifications</Card>
+  );
+}
+```
+
+### Step 3: Create the Card Component
+To create a consistent design, define a `Card` component.
+```jsx
+// components/Card.jsx
+function Card({ children }) {
+  return (
+    <div className="bg-white shadow-lg rounded-lg p-6 m-4">
+      {children}
+    </div>
+  );
+}
+
+export default Card;
+```
+
+### Running the Application
+Start the development server. Open your browser and navigate to `http://localhost:3000/dashboard`. You will see the main dashboard content along with user information, business information, and notifications displayed in parallel.
+
+By following these steps, you have successfully implemented parallel routes in Next.js, allowing you to display multiple sections of your application side by side.
