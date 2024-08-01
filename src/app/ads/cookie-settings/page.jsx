@@ -5,6 +5,7 @@ export default function CookieSettings() {
     <div className="flex flex-col items-center justify-center space-y-3 py-4">
       <h1 className="text-5xl font-bold">Cookie Settings page</h1>
       <Link href="/ads/additional-settings" className="text-blue-700 underline">additional Settings</Link>
+      <Link href="/login" className="text-blue-700 underline">Go to Login page</Link>
     </div>
   )
 }
