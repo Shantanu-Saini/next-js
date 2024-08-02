@@ -1001,3 +1001,5 @@ export default Card;
 Start the development server. Open your browser and navigate to `http://localhost:3000/dashboard`. You will see the main dashboard content along with user information, business information, and notifications displayed in parallel.
 
 By following these steps, you have successfully implemented parallel routes in Next.js, allowing you to display multiple sections of your application side by side.
+
+# 6 => Conditional Routes in Next.js
