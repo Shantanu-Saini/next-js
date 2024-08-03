@@ -1002,6 +1002,8 @@ Start the development server. Open your browser and navigate to `http://localhos
 
 By following these steps, you have successfully implemented parallel routes in Next.js, allowing you to display multiple sections of your application side by side.
 
+# 6 => Conditional Routes in Next.js
+
 # 6=> Conditional Routes in Next.js
 
 In this tutorial, you will learn how to create conditional routes in Next.js. This allows you to display different content based on certain conditions, such as whether a user is logged in or not. Here, we will demonstrate how to set up a login requirement for accessing certain parts of the application.
