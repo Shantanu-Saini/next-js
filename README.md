@@ -1001,3 +1001,73 @@ export default Card;
 Start the development server. Open your browser and navigate to `http://localhost:3000/dashboard`. You will see the main dashboard content along with user information, business information, and notifications displayed in parallel.
 
 By following these steps, you have successfully implemented parallel routes in Next.js, allowing you to display multiple sections of your application side by side.
+
+# 6=> Conditional Routes in Next.js
+
+In this tutorial, you will learn how to create conditional routes in Next.js. This allows you to display different content based on certain conditions, such as whether a user is logged in or not. Here, we will demonstrate how to set up a login requirement for accessing certain parts of the application.
+
+## 1. Create a Login Page Component
+
+Create a folder named `@Login` and add a `page.jsx` file inside it. This component will display a login prompt if the user is not logged in.
+
+```jsx
+// app/@Login/page.jsx
+import Card from "@/components/Card"
+import Link from "next/link"
+
+export default function Login() {
+    return (
+        <Card>
+            <h1 className="font-bold text-5xl">Please Login First</h1>
+            <Link href="/login" className="text-blue-700 underline text-xl">Login</Link>
+        </Card>
+    )
+}
+```
+
+## 2. Update the Dashboard Layout
+Update the layout.jsx file to conditionally render the login component if the user is not logged in. Place this file in the appropriate folder where your layout is defined.
+```jsx
+// app/dashboard/layout.jsx
+export default function DashboardLayout({
+    children,
+    user,
+    business,
+    notification,
+    login
+}) {
+    // const isLoggedIn = false; // Uncomment this line to simulate not logged in state
+    const isLoggedIn = true; // Uncomment this line to simulate logged in state
+
+    return isLoggedIn ? (
+        <div className="min-h-screen bg-gray-100 p-6">
+            <div className="bg-white shadow rounded-lg p-6 mb-6">
+                {children}
+            </div>
+            <div className="flex space-x-6">
+                <div className="flex-1 flex flex-col space-y-6">
+                    <div className="bg-white shadow rounded-lg p-6">
+                        {user}
+                    </div>
+                    <div className="bg-white shadow rounded-lg p-6">
+                        {business}
+                    </div>
+                </div>
+                <div className="flex-1 bg-white shadow rounded-lg p-6">
+                    {notification}
+                </div>
+            </div>
+        </div>
+    ) : (
+        login
+    )
+}
+```
+
+## 3. Run the Development Server: 
+Start your development server using npm run dev or yarn dev.
+
+## 4. Test the Conditional Routing: 
+Navigate to the dashboard route and toggle the isLoggedIn variable in layout.jsx to see the login prompt or the dashboard content based on the login state.
+
+By following these steps, you have successfully created a conditional routing mechanism in Next.js, ensuring that users need to log in to access specific parts of your application.
