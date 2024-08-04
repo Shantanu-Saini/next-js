@@ -930,7 +930,7 @@ By following these steps, you have successfully implemented parallel routes in N
 
 In this tutorial, you will learn how to create conditional routes in Next.js. This allows you to display different content based on certain conditions, such as whether a user is logged in or not. Here, we will demonstrate how to set up a login requirement for accessing certain parts of the application.
 
-## 1. Create a Login Page Component
+### 1. Create a Login Page Component
 
 Create a folder named `@Login` and add a `page.jsx` file inside it. This component will display a login prompt if the user is not logged in.
 
@@ -948,7 +948,7 @@ export default function Login() {
 }
 ```
 
-## 2. Update the Dashboard Layout
+### 2. Update the Dashboard Layout
 Update the layout.jsx file to conditionally render the login component if the user is not logged in. Place this file in the appropriate folder where your layout is defined.
 ```jsx
 // app/dashboard/layout.jsx
@@ -986,10 +986,181 @@ export default function DashboardLayout({
 }
 ```
 
-## 3. Run the Development Server: 
+### 3. Run the Development Server: 
 Start your development server using npm run dev or yarn dev.
 
 ## 4. Test the Conditional Routing: 
 Navigate to the dashboard route and toggle the isLoggedIn variable in layout.jsx to see the login prompt or the dashboard content based on the login state.
 
 By following these steps, you have successfully created a conditional routing mechanism in Next.js, ensuring that users need to log in to access specific parts of your application.
+
+# 7 => Intercepting Routes in Next.js
+
+Intercepting routes allows you to load a route from another part of your application within the current layout. This routing paradigm can be useful when you want to display the content of a route without the user switching to a different context.
+
+to create intercepting routes in Next.js by setting up an example with an Ads page and its settings. We will use the following structure:
+
+```
+app
+├── ads
+│ ├── page.jsx
+│ ├── ad-settings
+│ │ └── page.jsx
+│ └── (.)ad-settings
+│ └── page.jsx
+```
+
+## 1.  Match segments on the same level (.)
+### Step 1. Setting Up the Ads Page
+
+First, create the `ads` folder inside the `app` directory. Inside the `ads` folder, create a file named `page.jsx` with the following content:
+
+```jsx
+import Link from "next/link";
+
+export default function AdsPage() {
+    return (
+        <div className="flex flex-col items-center justify-center">
+            <h1 className="text-5xl font-bold my-4">Ads page</h1>
+            <Link href="/ads/ad-settings" className="underline text-blue-700">Ad Settings</Link>
+        </div>
+    );
+}
+```
+
+### Step 2. Creating the Ad Settings Page
+Next, create a folder named ad-settings inside the `ads` folder. Inside the `ad-settings` folder, create a file named `page.jsx` with the following content:
+
+```jsx
+import Link from "next/link";
+
+export default function AdSettings() {
+    return (
+        <div className="flex flex-col items-center justify-center py-4 space-y-3">
+            <h1 className="text-5xl font-bold">Ads Setting Page</h1>
+            <Link href="/ads" className="underline text-blue-700">Go To Ads page</Link>
+        </div>
+    );
+}
+```
+
+### Step 3. Creating the Intercepted Ad Settings Page
+Finally, create another folder named `(.)ad-settings` inside the ads folder. Inside the (.)ad-settings folder, create a file named `page.jsx` with the following content:
+
+```jsx
+import Link from "next/link";
+
+export default function InterceptedAdSettings() {
+    return (
+        <div className="flex flex-col items-center justify-center py-4 space-y-3">
+            <h1 className="text-5xl font-bold">Intercepted Ads Setting Page</h1>
+            <Link href="/ads" className="underline text-blue-700">Go To Ads page</Link>
+        </div>
+    );
+}
+```
+
+### Explanation
+- Ads Page (ads/page.jsx): This is the main ads page, which contains a link to the Ad Settings page.
+- Ad Settings Page (ads/ad-settings/page.jsx): This is the regular settings page for ads.
+- Intercepted Ad Settings Page (ads/(.)ad-settings/page.jsx): This is the intercepted route for the settings page. When navigating to /ads/- ad-settings, the content from this page will be displayed instead of the regular settings page due to the intercepting route.
+
+### Running the App
+Start your Next.js app navigate to `/ads` to see the Ads page. Click on "Ad Settings" to see the intercepted Ad Settings page.
+
+This setup allows you to override the default route with an intercepted route, providing flexibility in how you structure your routes and present content in your Next.js application.
+
+## 2.  Match segments on the one level above (..)
+
+In `one level above intercepting routes` Cookie Settings and Additional Settings pages. We will use the following structure:
+
+```
+app
+├── ads
+| ├── ad-settings
+│ │ └── page.jsx
+│ └── (.)ad-settings
+│ └── page.jsx
+│ ├── additional-settings
+│ │ └── page.jsx
+│ ├── cookie-settings
+│ │ ├── page.jsx
+│ │ └── (..)additional-settings
+│ │ └── page.jsx
+│ └── page.jsx
+```
+
+
+## Step 1. Setting Up the Ads Page
+
+First, create the `ads` folder inside the `app` directory. Inside the `ads` folder, create a file named `page.jsx` with the following content:
+
+```jsx
+import Link from "next/link"
+
+export default function AdsPage() {
+    return (
+        <div className="flex flex-col items-center justify-center">
+            <h1 className="text-5xl font-bold my-4">Ads page</h1>
+            <Link href="/ads/ad-settings" className="underline text-blue-700">Ad Settings</Link>
+            <Link href="/ads/additional-settings" className="underline text-blue-700">Additional Settings</Link>
+        </div>
+    )
+}
+```
+
+### Step 3. 2. Creating the Cookie Settings Page
+Next, create a folder named `cookie-settings` inside the ads folder. Inside the cookie-settings folder, create a file named `page.jsx` with the following content:
+
+```jsx
+import Link from "next/link";
+
+export default function CookieSettings() {
+    return (
+        <div className="flex flex-col items-center justify-center space-y-3 py-4">
+            <h1 className="text-5xl font-bold">Cookie Settings page</h1>
+            <Link href="/ads/additional-settings" className="text-blue-700 underline">Additional Settings</Link>
+        </div>
+    );
+}
+```
+
+### Step 4. Creating the Additional Settings Page
+Next, create a folder named additional-settings inside the ads folder. Inside the additional-settings folder, create a file named page.jsx with the following content:
+
+```jsx
+import Link from "next/link";
+
+export default function AdditionalSettings() {
+    return (
+        <div className="flex flex-col items-center justify-center space-y-3 py-4">
+            <h1 className="text-5xl font-bold">Additional Settings page</h1>
+            <Link href="/ads/cookie-settings" className="text-blue-700 underline">Cookie Settings</Link>
+        </div>
+    );
+}
+```
+### Step 4. Creating the Intercepted Additional Settings Page
+Finally, create another folder named (..)additional-settings inside the cookie-settings folder. Inside the (..)additional-settings folder, create a file named page.jsx with the following content:
+
+```jsx
+export default function InterceptedAdditionalSettings() {
+    return (
+        <div className="flex flex-col items-center justify-center space-y-3 py-4">
+            <h1 className="text-5xl font-bold">Intercepted Additional Settings page</h1>
+        </div>
+    );
+}
+```
+
+### Explanation
+- Ads Page (ads/page.jsx): This is the main ads page, which contains a link to the Ad Settings page.
+- Cookie Settings Page (ads/cookie-settings/page.jsx): This page contains a link to the Additional Settings page.
+- Additional Settings Page (ads/additional-settings/page.jsx): This page contains a link to the Cookie Settings page.
+- Intercepted Additional Settings Page (ads/cookie-settings/(..)additional-settings/page.jsx): This is the intercepted route for the Additional Settings page when navigating from the Cookie Settings page.
+
+### Running the App
+Start your Next.js app navigate to `/ads` to see the Ads page. Click on "Ad Settings" to navigate to the Ad Settings page. Similarly, navigate to `/ads/cookie-settings` and `/ads/additional-settings` to see the respective settings pages. `When navigating from the Cookie Settings page to the Additional Settings page, the intercepted route will be displayed.`
+
+This setup allows you to override the default route with an intercepted route, providing flexibility in how you structure your routes and present content in your Next.js application.
+
